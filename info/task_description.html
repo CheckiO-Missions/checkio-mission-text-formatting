@@ -1,16 +1,16 @@
 <!-- Describe task in general -->
 <p>
-	You are given a long line (monospace font), and you have to break the line in order to respect a given width.
-	Then you have to format the text thanks to the given style: 'l' means you have to put the text on the <strong>l</strong>eft, 'c' for <strong>c</strong>enter, 'r' for <strong>r</strong>ight, and 'j' means you have to <strong>j</strong>ustify the text.
-	Finally, each line of the output should not end with any whitespace.
+	You are given a long line (a monospace font), and you have to break the line in order to respect a given width.
+	Then you have to format the text according to the given style: 'l' means you have to align the text to the <strong>l</strong>eft, 'c' for <strong>c</strong>enter, 'r' for <strong>r</strong>ight, and 'j' means you have to <strong>j</strong>ustify the text.
+	Finally, the lines of the output shouldn’t end with a whitespace.
 </p>
 
 <p>
-	If you have 2 * n + 1 spaces to put around a line in order to center it, then put n spaces before, not n + 1.
+	If you have to put 2 * n + 1 spaces around a line in order to center it, then put n spaces before, not n + 1.
 </p>
 
 <p>
-	Justify rules:
+	The justification rules:
 	<ul>
 		<li>Since we can't always put the same number of spaces between words in a line, put big blocks of spaces first. For example: X---X---X--X--X--X when you have to put 12 spaces in 5 gaps: 3-3-2-2-2.</li>
 		<li>Don't justify the last line of a text.</li>
@@ -18,14 +18,14 @@
 </p>
 
 <p>
-	You won't have to consider to break a word in two parts because given widths are big enough.
+	You won't have to consider splitting a word into two parts because the given widths are big enough.
 </p>
 
 
 <!-- Explain input and output values -->
 <p>
 	<strong>Input:</strong>
-	A text (string), a width (integer) and a style (string).
+	A text (string), width (integer) and style (string).
 </p>
 
 <p>
