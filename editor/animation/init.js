@@ -1,5 +1,5 @@
 //Dont change it
-requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
+requirejs(['ext_editor_io2', 'jquery_190', 'raphael_210'],
     function (extIO, $) {
         function textFormattingCanvas(dom, data) {
             if (! data || ! data.ext) {
@@ -38,11 +38,6 @@ requirejs(['ext_editor_io', 'jquery_190', 'raphael_210'],
         var $tryit;
 
         var io = new extIO({
-            multipleArguments: true,
-            functions: {
-                python: 'text_formatting',
-                js: 'textFormatting'
-            },
             animation: function($expl, data){
                 textFormattingCanvas(
                     $expl[0],
