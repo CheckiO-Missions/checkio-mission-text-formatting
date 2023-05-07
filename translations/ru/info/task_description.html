@@ -1,12 +1,12 @@
 <!-- Describe task in general -->
 <p>
 	Вам предоставлена длинная строка (набранная моноширинным шрифтом), и вы должны разбить ее, чтобы соблюсти заданную ширину.
-	После этого вам нужно отформатировать текст в соответствии с заданным стилем: 'l' означает, что вы должны выровнять текст по левому краю - <strong>l</strong>eft, 'c' - по центру -  <strong>c</strong>enter, 'r' - по правому краю - <strong>r</strong>ight, а 'j' означает, что вы должны выровнять текст по ширине - <strong>j</strong>ustify.
+	После этого вам нужно отформатировать текст в соответствии с заданным стилем: <b>"l"</b>  означает, что вы должны выровнять текст по левому краю - <strong>l</strong>eft, <b>"c"</b> - по центру -  <strong>c</strong>enter, <b>"r"</b> - по правому краю - <strong>r</strong>ight, а <b>"j"</b> означает, что вы должны выровнять текст по ширине - <strong>j</strong>ustify.
 	И, наконец, строки вывода не должны заканчиваться пробелами.
 </p>
 
 <p>
-	Если вам нужно поместить 2 * n + 1 пробела вокруг строки, чтобы отцентрировать ее, то поставьте n пробелов вперед, а не n + 1.
+	Если вам нужно поместить суммарно непарное количество пробелов вокруг строки, чтобы отцентрировать ее, то поставьте парное количество пробелов вперед.
 </p>
 
 <p>
@@ -23,53 +23,28 @@
 
 <!-- Explain input and output values -->
 <p>
-	<strong>Входные данные:</strong>
-	Текст (строка -str), ширина (целое число -int) и стиль (строка -str).
+	<strong>Входные данные:</strong> Текст (строка - {% if is_js %}string{% else %}str{% endif %}), ширина (целое число - {% if is_js %}number{% else %}int{% endif %}) и стиль (строка - {% if is_js %}string{% else %}str{% endif %}).
 </p>
 
 <p>
-	<strong>Выходные данные:</strong>
-	Отформатированный текст (строка -str).
+	<strong>Выходные данные:</strong> Отформатированный текст (строка - {% if is_js %}string{% else %}str{% endif %}).
 </p>
 
 
 <!-- Put some usage examples -->
 <div class="for_info_only">
-<p>
-	<strong>Примеры:</strong>
-</p>
-
-<pre class="brush: python">
-text = "Hi, my name is Alex and I am 18 years old."
-
-text_formatting(text, 20, 'l') == \
-"""Hi, my name is Alex
-and I am 18 years
-old."""
-
-text_formatting(text, 20, 'c') == \
-"""Hi, my name is Alex
- and I am 18 years
-        old."""
-
-text_formatting(text, 20, 'r') == \
-""" Hi, my name is Alex
-   and I am 18 years
-                old."""
-
-text_formatting(text, 20, 'j') == \
-"""Hi,  my name is Alex
-and  I  am  18 years
-old."""
-</pre>
+	<p>
+		<strong>Примеры:</strong>
+	</p>
+	<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
 </div>
 
 <p>
 	<strong>Предварительное условие:</strong>
-<ul>
-	<li>all(len(word) <= width for word in text.split())</li>
-	<li>'\n' not in text</li>
-	<li>style in ('l', 'c', 'r', 'j')</li>
-	<li>0 < len(text) <= 1000</li>
-</ul>
+	<ul>
+		<li><i>all(len(word) <= width for word in text.split());</i></li>
+		<li><i>'\n' нету в тексте;</i></li>
+		<li><i>варианты стиля в ("l", "c", "r", "j");</i></li>
+		<li><i>0 < len(text) <= 1000.</i></li>
+	</ul>
 </p>
