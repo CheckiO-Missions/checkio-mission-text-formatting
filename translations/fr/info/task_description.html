@@ -1,0 +1,49 @@
+<!-- Describe task in general -->
+<p>
+	On vous donne une longue ligne (une police monospace), et vous devez briser la ligne afin de respecter une largeur donnée. Ensuite, vous devez formater le texte selon le style donné: <b>"l"</b> signifie que vous devez aligner le texte à <strong>gauche</strong>, <b>"c"</b> au <strong>centre</strong>, <b>"r"</b> à <strong>droite</strong>, et <b>"j"</b> signifie que vous devez <strong>justifier le</strong>texte. Enfin, les lignes de la sortie ne doivent pas se terminer par un espace.
+</p>
+
+<p>
+	Si vous devez mettre un nombre impair d'espaces autour d'une ligne pour la centrer, mettez un nombre pair d'espaces avant.
+</p>
+
+<p>
+	Les règles de justification:
+	<ul>
+		<li>comme on ne peut pas toujours mettre le même nombre d'espaces entre les mots d'une ligne, mettez d'abord de grands blocs d'espaces. Par exemple: X---X---X--X--X--X lorsque vous devez mettre 12 espaces dans 5 espaces: 3-3-2-2-2;</li>
+		<li>ne justifiez pas la dernière ligne d'un texte.</li>
+	</ul>
+</p>
+
+<p>
+	Vous n'aurez pas à envisager de diviser un mot en deux parties, car les largeurs indiquées sont suffisantes.
+</p>
+
+
+<!-- Explain input and output values -->
+<p>
+	<strong>Entrée:</strong> Un texte <span>(str{% if is_js %}ing{% endif %})</span>avec une largeur <span>({% if is_js %}number{% else %}int{% endif %})</span> et le style <span>(str{% if is_js %}ing{% endif %})</span>.
+</p>
+
+<p>
+	<strong>Sortie:</strong> Le texte formaté ({% if is_js %}string{% else %}str{% endif %}).
+</p>
+
+
+<!-- Put some usage examples -->
+<div class="for_info_only">
+	<p>
+		<strong>Exemples:</strong>
+	</p>
+	<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+
+<p>
+	<strong>Conditions préalables:</strong>
+	<ul>
+		<li><i>all(len(word) &lt;= width for word in text.split());</i></li>
+		<li><i>'\n' n'est pas dans le texte;</i></li>
+		<li><i>style dans ('l', 'c', 'r', 'j');</i></li>
+		<li><i>0 &lt; len(text) &lt;= 1000.</i></li>
+	</ul>
+</p>
