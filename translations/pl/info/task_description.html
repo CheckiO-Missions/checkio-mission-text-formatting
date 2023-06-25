@@ -1,0 +1,49 @@
+<!-- Describe task in general -->
+<p>
+	Otrzymuje Pan długą linię (czcionka monospace) i musi Pan złamać linię, aby zachować określoną szerokość. Następnie należy sformatować tekst zgodnie z podanym stylem: <b>"l"</b> oznacza wyrównanie tekstu do <strong>lewej</strong>, <b>"c"</b> do <strong>środka</strong>, <b>"r"</b> do <strong>prawej</strong>, a <b>"j"</b> oznacza <strong>justowanie</strong>tekstu. Wreszcie, linie wyjściowe nie powinny kończyć się białymi znakami.
+</p>
+
+<p>
+	Jeśli muszą Państwo wstawić nieparzystą liczbę spacji wokół wiersza, aby go wyśrodkować, proszę wstawić parzystą liczbę spacji przed wierszem.
+</p>
+
+<p>
+	Zasady justowania:
+	<ul>
+		<li>ponieważ nie zawsze możemy wstawić taką samą liczbę spacji między wyrazami w wierszu, należy najpierw wstawić duże bloki spacji. Na przykład: X---X---X--X--X--X, gdy trzeba wstawić 12 spacji w 5 odstępach: 3-3-2-2-2;</li>
+		<li>proszę nie justować ostatniego wiersza tekstu.</li>
+	</ul>
+</p>
+
+<p>
+	Nie trzeba będzie rozważać dzielenia słowa na dwie części, ponieważ podane szerokości są wystarczająco duże.
+</p>
+
+
+<!-- Explain input and output values -->
+<p>
+	<strong>Dane wejściowe:</strong> Tekst <span>(str{% if is_js %}ing{% endif %})</span>szerokość <span>({% if is_js %}number{% else %}int{% endif %})</span> i styl <span>(str{% if is_js %}ing{% endif %})</span>.
+</p>
+
+<p>
+	<strong>Dane wyjściowe:</strong> Sformatowany tekst ({% if is_js %}string{% else %}str{% endif %}).
+</p>
+
+
+<!-- Put some usage examples -->
+<div class="for_info_only">
+	<p>
+		<strong>Przykłady:</strong>
+	</p>
+	<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+
+<p>
+	<strong>Warunki wstępne:</strong>
+	<ul>
+		<li><i>all(len(word) &lt;= width for word in text.split());</i></li>
+		<li><i>'\n' nie w text;</i></li>
+		<li><i>style in ('l', 'c', 'r', 'j');</i></li>
+		<li><i>0 &lt; len(text) &lt;= 1000.</i></li>
+	</ul>
+</p>

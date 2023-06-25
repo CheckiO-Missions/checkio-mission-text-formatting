@@ -1,0 +1,229 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Nie mam pojęcia, jak zacząć rozwiązywać tę misję.
+    </div>
+    <div class="answer">
+        <p>
+            moduł <b class="code">textwrap</b> ze standardowej biblioteki z metodami justowania ciągów <b class="code">center, rjust</b> sprawdza się w większości przypadków. Aby uzasadnić wiersz po szerokości, należy rozdzielić dodatkowe spacje między "dziury" między słowami.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Brzmi ciekawie, od czego powinienem zacząć?
+    </div>
+    <div class="answer">
+        <p>
+            Proszę zaimportować i zapoznać się z takimi modułami jak <a target="_blank" href="https://docs.python.org/3/library/textwrap.html">textwrap</a> i <a target="_blank" href="https://docs.python.org/3/library/operator.html">operator</a>. Potrzebne będą takie ich funkcje jak <a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap">wrap()</a>, <a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.fill">fill()</a> i <a target="_blank" href="https://docs.python.org/3/library/operator.html#operator.methodcaller">methodcaller()</a>.
+        </p>
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Zapoznałem się z opisem modułów i funkcji. Jak zacząć rozwiązywać?
+    </div>
+    <div class="answer">
+        <p>
+            Ponieważ lewe justowanie jest trybem domyślnym, nie potrzebuje Pan żadnych dodatkowych zmian po zawinięciu <b class="code">text</b> do potrzebnego <b class="code">width</b>. W przypadku stylu <b class="code">l</b>, wystarczy podzielić <b class="code">text</b> na linie poprawnego <b class="code">width</b> i połączyć je z powrotem w pojedynczy tekst. To właśnie robi <b class="code">textwrap.fill()</b>!
+        </p>
+        <pre class="brush: python">
+if style == "l":
+    return fill(text, width)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wow, to sprytne posunięcie Pythona, aby mieć tak przydatne moduły! Co robić dalej?
+    </div>
+    <div class="answer">
+        <p>
+            Dla wszystkich innych <b class="code">style</b> nadal potrzebują Państwo sekwencji linii, zawiniętych dla potrzebnego <b class="code">width</b>, bez łączenia ich jeszcze w tekst. W tym celu proszę użyć <b class="code">textwrap.wrap()</b>.
+        </p>
+        <pre class="brush: python">
+lines = wrap(text, width)
+        </pre>
+        <p>
+            Jeśli <b class="code">style</b> justowania jest "środkowe" lub "prawe", należy użyć określonych metod ciągów <a target="_blank" href="https://www.w3schools.com/python/ref_string_center.asp">str.center()</a> i <a target="_blank" href="https://www.w3schools.com/python/ref_string_rjust.asp">str.rjust()</a>. Potrzebne jest tutaj wywołanie poprawnej metody z wartością <b class="code">width</b>. Krótkim i łatwym sposobem na utworzenie takiej metody jest użycie <b class="code">operator.methodcaller()</b>. 
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+        </pre>
+        <p>
+            Tak więc, w zależności od <b class="code">style</b>, bierze Pan metodę i przekazuje <b class="code">width</b> jako jej argument.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        To trudne! Jak zastosować tę metodę, aby uzyskać poprawnie wyjustowany tekst?
+    </div>
+    <div class="answer">
+        <p>
+            Proszę się zastanowić. Najpierw należy przekształcić każdy wiersz <b class="code">lines</b> za pomocą metody <b class="code">just</b>. Dobrze jest użyć funkcji <a target="_blank" href="https://www.w3schools.com/python/ref_func_map.asp">map()</a>, aby zastosować tę samą operację do każdego elementu sekwencji.   
+        </p>
+        <pre class="brush: python">
+map(just, lines)
+        </pre>
+        <p>
+            Aby pozbyć się końcowych spacji w każdym wierszu, należy zastosować metodę <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a> do przekonwertowanego <b class="code">lines</b> w taki sam sposób, jak zrobił to Pan powyżej.
+            Ponieważ odwołuje się Pan do metody bez wywoływania jej, nawiasy nie są potrzebne.
+        </p>
+        <pre class="brush: python">
+map(str.rstrip, map(just, lines))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Co pozostaje w tych dwóch przypadkach?
+    </div>
+    <div class="answer">
+        <p>
+            Tak, wprowadził Pan zmiany i teraz łączy Pan <b class="code">lines</b> w tekst wielowierszowy, używając metody <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> z nowym separatorem wierszy.
+        </p>
+        <pre class="brush: python">
+return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+        <p>
+            Tak więc ten blok wygląda teraz następująco:
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+    return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak obsługiwać justowanie według szerokości?
+    </div>
+    <div class="answer">
+        <p>
+            Ten styl justowania nie jest stosowany do ostatniej linii tekstu. Proszę usunąć ostatni wiersz z <b class="code">lines</b> i przypisać go do zmiennej, używając metody <a target="_blank" href="https://www.w3schools.com/python/ref_list_pop.asp">list.pop()</a>.
+        </p>
+        <pre class="brush: python">
+last = lines.pop()
+        </pre>
+        <p>
+            Nie może Pan wykonywać operacji z <b class="code">lines</b>. Ponieważ będzie Pan potrzebował zarówno indeksu, jak i wartości każdego wiersza, dobrze jest użyć funkcji <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a>.
+        </p>
+        <pre class="brush: python">
+for i, line in enumerate(lines):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Co powinienem zrobić wewnątrz pętli?
+    </div>
+    <div class="answer">
+       <p> 
+            Dla każdego wiersza należy policzyć liczbę dodatkowych białych spacji do rozmieszczenia oraz liczbę "dziur" między słowami w wierszu.
+       </p>
+       <pre class="brush: python">
+miss, spaces = width - len(line), line.count(" ")
+        </pre>
+       <p> 
+            Oczywiście mogą Państwo rozdzielać, jeśli w wierszu znajdują się co najmniej dwa słowa.
+       </p>
+jeśli spacje:
+    ...
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak znaleźć pożądaną liczbę spacji między słowami?
+    </div>
+    <div class="answer">
+        <p>
+            Liczba spacji jest zawsze liczbą całkowitą i zgodnie z opisem duże bloki powinny iść jako pierwsze. Proszę zauważyć, że najłatwiej jest uzyskać iloraz i przypomnienie z podziału dodatkowych spacji i "dziur". Proszę obliczyć je za pomocą funkcji <a target="_blank" href="https://www.w3schools.com/python/ref_func_divmod.asp">divmod()</a> wewnątrz warunku <b class="code">if</b>.
+        </p>
+        <pre class="brush: python">
+    div, mod = divmod(miss, spaces)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak zmienić liczbę spacji między słowami na pożądaną?
+    </div>
+    <div class="answer">
+        <p>
+            Ma Pan już jedną spację między każdymi dwoma słowami w wierszu. Obliczenia pokazują, że należy dodać <b class="code">div</b> spacji do tej jednej w każdej "dziurze". Łatwo to zrobić za pomocą metody <a target="_blank" href="https://www.w3schools.com/python/ref_string_replace.asp">str.replace()</a>.
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1))
+        </pre>
+        <p>
+            Ale nadal ma Pan <b class="code">mod</b> spacji, które trzeba rozdzielić między pierwsze "dziury" o jedną. Proszę więc ponownie dokonać zamiany i zamienić pierwsze "dziury" <b class="code">mod</b> o szerokości <b class="code">(div+1)</b> na <b class="code">(div+2)</b>.
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>Ponieważ <b class="code">replace()</b> zwraca nowy ciąg znaków, należy przypisać go do odpowiedniego indeksu <b class="code">lines</b>.
+        </p>
+        <pre class="brush: python">
+lines[i] = line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>
+            To prawie wszystko. Po zakończeniu pętli należy połączyć <b class="code">lines</b> z <b class="code">last</b> (proszę o tym nie zapomnieć!) w wielowierszowy tekst i zwrócić go.
+        </p>
+        <pre class="brush: python">
+return "\n".join(lines + [last])
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Jak więc powinno wyglądać moje ostateczne rozwiązanie?
+    </div>
+    <div class="answer">
+        <p>
+            Proszę połączyć wszystkie podpowiedzi i zawinąć kod w wyrażenie funkcyjne. Używanie podpowiedzi typu dla danych wejściowych i wyjściowych jest wysoce zalecane.
+        </p>
+        <p>Oto całe rozwiązanie:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+
+
+def text_formatting(text: str, width: int, style: str) -> str:
+    
+    if style == "l":
+        return fill(text, width)
+    lines = wrap(text, width)
+    if style in "cr":
+        just = methodcaller(("rjust", "center")[style == "c"], width)
+        return "\n".join(map(str.rstrip, map(just, lines)))
+    last = lines.pop()
+    for i, line in enumerate(lines):
+        miss, spaces = width - len(line), line.count(" ")
+        if spaces:
+            div, mod = divmod(miss, spaces)
+            lines[i] = line.replace(" ", " "*(div+1))\
+                           .replace(" "*(div+1)," "*(div+2), mod)
+    return "\n".join(lines + [last])
+        </pre>
+        </div>
+        <p>Proszę kliknąć <b>Best Solutions</b> w menu misji i zobaczyć wiele innych ciekawych rozwiązań!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Dzięki! Teraz wiem i rozumiem więcej! Wszystko działa jak należy!
+    </div>
+    <div class="answer">
+        miło mi to słyszeć!
+    </div>
+</div>
+</body>
