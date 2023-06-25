@@ -1,8 +1,6 @@
 <!-- Describe task in general -->
 <p>
-	You are given a long line (a monospace font), and you have to break the line in order to respect a given width.
-	Then you have to format the text according to the given style: <b>"l"</b> means you have to align the text to the <strong>l</strong>eft, <b>"c"</b> for <strong>c</strong>enter, <b>"r"</b> for <strong>r</strong>ight, and <b>"j"</b> means you have to <strong>j</strong>ustify the text.
-	Finally, the lines of the output shouldn’t end with a whitespace.
+	You are given a long line (a monospace font), and you have to break the line in order to respect a given width. Then you have to format the text according to the given style: <b>"l"</b> means you have to align the text to the <strong>l</strong>eft, <b>"c"</b> for <strong>c</strong>enter, <b>"r"</b> for <strong>r</strong>ight, and <b>"j"</b> means you have to <strong>j</strong>ustify the text. Finally, the lines of the output shouldn’t end with a whitespace.
 </p>
 
 <p>
@@ -24,7 +22,7 @@
 
 <!-- Explain input and output values -->
 <p>
-	<strong>Input:</strong> A text ({% if is_js %}string{% else %}str{% endif %}), width ({% if is_js %}number{% else %}int{% endif %}) and style ({% if is_js %}string{% else %}str{% endif %}).
+	<strong>Input:</strong> A text <span translate="no">(str{% if is_js %}ing{% endif %})</span>, width <span translate="no">({% if is_js %}number{% else %}int{% endif %})</span> and style <span translate="no">(str{% if is_js %}ing{% endif %})</span>.
 </p>
 
 <p>
