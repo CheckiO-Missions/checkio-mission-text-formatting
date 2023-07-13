@@ -1,0 +1,231 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        我不知道如何开始解决这项任务。
+    </div>
+    <div class="answer">
+        <p>
+            💡 标准库中的模块<b class="code">textwrap</b> ，其中的字符串证明方法<b class="code">center, rjust</b> ，适用于大多数情况。要按宽度证明行的正确性，您需要在单词之间的 "孔 "中分配额外的空格。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        听起来很有趣，我应该从哪里开始呢？
+    </div>
+    <div class="answer">
+        <p>
+            让我们导入并熟悉<a target="_blank" href="https://docs.python.org/3/library/textwrap.html">textwrap</a> 和<a target="_blank" href="https://docs.python.org/3/library/operator.html">operator</a> 这样的模块。您将需要<a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap">wrap()</a>,<a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.fill">fill()</a> 和<a target="_blank" href="https://docs.python.org/3/library/operator.html#operator.methodcaller">methodcaller()</a> 这样的函数。
+        </p>
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        我已经阅读了模块和函数说明。如何开始求解？
+    </div>
+    <div class="answer">
+        <p>
+            因为左对齐是默认模式，所以在将<b class="code">text</b> 封装到必要的<b class="code">width</b> 后，您不需要做额外的修改。如果样式是<b class="code">l</b> ，您只需要将<b class="code">text</b> 分成正确的<b class="code">width</b> 行，然后将它们连接成单个文本。这就是<b class="code">textwrap.fill()</b> ！
+        </p>
+        <pre class="brush: python">
+if style == "l":
+    return fill(text, width)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        哇，Python 拥有如此有用的模块真是明智之举！下一步做什么？
+    </div>
+    <div class="answer">
+        <p>
+            对于所有其他的<b class="code">style</b>'s，你仍然需要一个行序列，为必要的<b class="code">width</b> 进行包装，而不是将它们连接到文本中。为此，使用<b class="code">textwrap.wrap()</b> 。
+        </p>
+        <pre class="brush: python">
+lines = wrap(text, width)
+        </pre>
+        <p>
+            如果<b class="code">style</b> 的正当化是 "居中 "或 "居右"，您需要使用特定的字符串方法<a target="_blank" href="https://www.w3schools.com/python/ref_string_center.asp">str.center()</a> 和<a target="_blank" href="https://www.w3schools.com/python/ref_string_rjust.asp">str.rjust()</a> 。这里您需要的是调用一个正确的带有<b class="code">width</b> 值的方法。创建这种方法的简捷方法是使用<b class="code">operator.methodcaller()</b> 。  
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+        </pre>
+        <p>
+            因此，根据<b class="code">style</b> ，您需要一个方法，并传递<b class="code">width</b> 作为它的参数。
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        这很棘手！如何应用该方法获得正确对齐的文本？
+    </div>
+    <div class="answer">
+        <p>
+            让我们一起来想一想。首先，您需要使用<b class="code">just</b> 方法对<b class="code">lines</b> 的每一行进行转换。最好使用<a target="_blank" href="https://www.w3schools.com/python/ref_func_map.asp">map()</a> 函数对序列中的每个元素进行相同的操作。   
+        </p>
+        <pre class="brush: python">
+map(just, lines)
+        </pre>
+        <p>
+            为了去掉每一行的尾部空格，您需要像上面一样对转换后的<b class="code">lines</b> 应用<a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a> 方法。
+            由于您没有调用该方法，因此不需要使用括号。
+        </p>
+        <pre class="brush: python">
+map(str.rstrip, map(just, lines))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        这两种情况还剩下什么？
+    </div>
+    <div class="answer">
+        <p>
+            是的，您已经完成了更改，现在将<b class="code">lines</b> 连接到多行文本中，使用<a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> 方法，并使用新的分隔线。
+        </p>
+        <pre class="brush: python">
+return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+        <p>
+            因此，该代码块现在看起来像
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+    return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        如何根据宽度处理正当化？
+    </div>
+    <div class="answer">
+        <p>
+            这种样式的对齐方式不适用于文本中的最后一行。从<b class="code">lines</b> 中移除最后一行并将其赋值给变量 , 使用<a target="_blank" href="https://www.w3schools.com/python/ref_list_pop.asp">list.pop()</a> 方法。
+        </p>
+        <pre class="brush: python">
+last = lines.pop()
+        </pre>
+        <p>
+            现在您可以对<b class="code">lines</b> 进行操作。因为您需要每行的索引和值，所以最好使用<a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a> 函数。
+        </p>
+        <pre class="brush: python">
+for i, line in enumerate(lines):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        我应该在循环内部做什么？
+    </div>
+    <div class="answer">
+        <p>
+            对于每一行，您需要计算需要分配的额外空格数以及行中单词之间的 "空洞 "数。
+        </p>
+        <pre class="brush: python">
+miss, spaces = width - len(line), line.count(" ")
+        </pre>
+        <p>
+            当然，如果一行中至少有两个单词，则可以进行分配。
+        </p>
+        <pre class="brush: python">
+if spaces:
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        如何确定字与字之间的空格数？
+    </div>
+    <div class="answer">
+        <p>
+            空格的数量总是整数，根据描述，大的区块应该排在前面。您可能会发现，最简单的方法是通过额外空格和 "洞 "的划分得到商和提醒。在<b class="code">if</b> 条件下使用<a target="_blank" href="https://www.w3schools.com/python/ref_func_divmod.asp">divmod()</a> 函数计算。
+        </p>
+        <pre class="brush: python">
+    div, mod = divmod(miss, spaces)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        如何将单词之间的空格数改为理想数？
+    </div>
+    <div class="answer">
+        <p>
+            您的行中每两个字之间已经有一个空格。计算表明，您需要在每一个 "洞 "中增加<b class="code">div</b> 空格。使用<a target="_blank" href="https://www.w3schools.com/python/ref_string_replace.asp">str.replace()</a> 方法很容易做到这一点。
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1))
+        </pre>
+        <p>
+            但是您仍然有<b class="code">mod</b> 空格，您需要在第一个 "孔 "中分配一个。因此，现在需要再次进行替换，将<b class="code">mod</b> 第一个 "孔 "的宽度<b class="code">(div+1)</b> 替换为<b class="code">(div+2)</b> 。
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>由于<b class="code">replace()</b> 返回一个新的字符串，您需要将其赋值给<b class="code">lines</b> 的相应索引。
+        </p>
+        <pre class="brush: python">
+lines[i] = line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>
+            几乎就是这样。在循环之后，您需要将<b class="code">lines</b> 与<b class="code">last</b> （不要担心！）连接成一个多行文本并返回。
+        </p>
+        <pre class="brush: python">
+return "\n".join(lines + [last])
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        那么，我的最终解决方案应该是怎样的呢？
+    </div>
+    <div class="answer">
+        <p>
+            您需要连接所有提示并将代码封装为函数表达式。强烈建议对输入和输出数据使用类型提示。
+        </p>
+        <p>这里是整个解决方案：</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+
+
+def text_formatting(text: str, width: int, style: str) -> str:
+    
+    if style == "l":
+        return fill(text, width)
+    lines = wrap(text, width)
+    if style in "cr":
+        just = methodcaller(("rjust", "center")[style == "c"], width)
+        return "\n".join(map(str.rstrip, map(just, lines)))
+    last = lines.pop()
+    for i, line in enumerate(lines):
+        miss, spaces = width - len(line), line.count(" ")
+        if spaces:
+            div, mod = divmod(miss, spaces)
+            lines[i] = line.replace(" ", " "*(div+1))\
+                           .replace(" "*(div+1)," "*(div+2), mod)
+    return "\n".join(lines + [last])
+        </pre>
+        </div>
+        <p>点击任务菜单<b>Best Solutions</b> ，查看更多有趣的解决方案！</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        谢谢！我现在知道并理解了更多！一切正常！
+    </div>
+    <div class="answer">
+        很高兴听到这个消息！
+    </div>
+</div>
+</body>
