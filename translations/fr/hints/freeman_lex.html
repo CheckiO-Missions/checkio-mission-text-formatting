@@ -113,7 +113,7 @@ if style in "cr":
 last = lines.pop()
         </pre>
         <p>
-            Vous pouvez effectuer des opérations avec <b class="code">lines</b>. Comme vous aurez besoin de l'index et de la valeur de chaque ligne, il est préférable d'utiliser la fonction <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a>.
+            Vous pouvez maintenant effectuer des opérations avec <b class="code">lines</b>. Comme vous aurez besoin de l'index et de la valeur de chaque ligne, il est préférable d'utiliser la fonction <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a>.
         </p>
         <pre class="brush: python">
 for i, line in enumerate(lines):
@@ -126,15 +126,15 @@ for i, line in enumerate(lines):
         Que dois-je faire à l'intérieur de la boucle?
     </div>
     <div class="answer">
-       <p> 
+        <p>
             Pour chaque ligne, vous devez compter un certain nombre d'espaces blancs supplémentaires à distribuer et un certain nombre de "trous" entre les mots de la ligne.
-       </p>
-       <pre class="brush: python">
+        </p>
+        <pre class="brush: python">
 miss, spaces = width - len(line), line.count(" ")
         </pre>
-       <p> 
+        <p>
             Bien entendu, vous pouvez procéder à la distribution si vous avez au moins deux mots dans la ligne.
-       </p>
+        </p>
         <pre class="brush: python">
 if spaces:
     ...
