@@ -107,13 +107,13 @@ if style in "cr":
     </div>
     <div class="answer">
         <p>
-            Ten styl justowania nie jest stosowany do ostatniej linii tekstu. Proszę usunąć ostatni wiersz z <b class="code">lines</b> i przypisać go do zmiennej, używając metody <a target="_blank" href="https://www.w3schools.com/python/ref_list_pop.asp">list.pop()</a>.
+            Ten styl justowania nie jest stosowany do ostatniego wiersza tekstu. Proszę usunąć ostatni wiersz z <b class="code">lines</b> i przypisać go do zmiennej, używając metody <a target="_blank" href="https://www.w3schools.com/python/ref_list_pop.asp">list.pop()</a>.
         </p>
         <pre class="brush: python">
 last = lines.pop()
         </pre>
         <p>
-             Pan może wykonywać operacji z <b class="code">lines</b>. Ponieważ będzie Pan potrzebował zarówno indeksu, jak i wartości każdego wiersza, dobrze jest użyć funkcji <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a>.
+            Teraz mogą Państwo wykonywać operacje na <b class="code">lines</b>. Ponieważ będą Państwo potrzebować zarówno indeksu, jak i wartości każdego wiersza, dobrze jest użyć funkcji <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a>.
         </p>
         <pre class="brush: python">
 for i, line in enumerate(lines):
@@ -126,15 +126,15 @@ for i, line in enumerate(lines):
         Co powinienem zrobić wewnątrz pętli?
     </div>
     <div class="answer">
-       <p> 
+        <p>
             Dla każdego wiersza należy policzyć liczbę dodatkowych białych spacji do rozmieszczenia oraz liczbę "dziur" między słowami w wierszu.
-       </p>
-       <pre class="brush: python">
+        </p>
+        <pre class="brush: python">
 miss, spaces = width - len(line), line.count(" ")
         </pre>
-       <p> 
+        <p>
             Oczywiście mogą Państwo rozdzielać, jeśli w wierszu znajdują się co najmniej dwa słowa.
-       </p>
+        </p>
         <pre class="brush: python">
 if spaces:
     ...
