@@ -1,0 +1,49 @@
+<!-- Describe task in general -->
+<p>
+	给您一个长行（monospace字体），您必须按照给定的宽度断行。然后，您必须根据给定的样式对文本进行格式化：<b>"l"</b> 表示文本必须向<strong>左</strong>对齐，<b>"c"</b> 表示<strong>居中</strong>对齐，<b>"r"</b> 表示向<strong>右</strong> <strong>对齐</strong>，<b>"j"</b> 表示文本必须对齐。最后，输出结果的行尾不能有空格。
+</p>
+
+<p>
+	如果为了居中而必须在某一行的周围加上奇数个空格，那么就在前面加上偶数个空格。
+</p>
+
+<p>
+	说明理由规则：
+	<ul>
+		<li>由于我们不能总是在一行中的单词之间放置相同数量的空格，因此应先放置大的空格块。例如X---X---X---X---X----X，当您必须在5个空格中填入12个空格时：3-3-2-2-2;</li>
+		<li>不要为文本的最后一行对齐。</li>
+	</ul>
+</p>
+
+<p>
+	您不必考虑将一个单词分成两部分，因为给定的宽度已经足够大了。
+</p>
+
+
+<!-- Explain input and output values -->
+<p>
+	<strong>输入：</strong>一个文本 <span>(str{% if is_js %}ing{% endif %})</span>，宽度 <span>({% if is_js %}number{% else %}int{% endif %})</span>和样式 <span>(str{% if is_js %}ing{% endif %})</span>.
+</p>
+
+<p>
+	<strong>输出：</strong>格式化文本 ({% if is_js %}string{% else %}str{% endif %})。
+</p>
+
+
+<!-- Put some usage examples -->
+<div class="for_info_only">
+	<p>
+		<strong>示例：</strong>
+	</p>
+	<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+
+<p>
+	<strong>先决条件：</strong>
+	<ul>
+		<li><i>all(len(word) &lt;= width for word in text.split())；</i></li>
+		<li><i>text.split() 中没有'\n'；</i></li>
+		<li><i>style in ('l', 'c', 'r', 'j')；</i></li>
+		<li><i>0 &lt; len(text) &lt;= 1000.</i></li>
+	</ul>
+</p>
