@@ -1,0 +1,49 @@
+<!-- Describe task in general -->
+<p>
+	Sie erhalten eine lange Zeile (eine Monospace-Schriftart) und müssen die Zeile so umbrechen, dass eine bestimmte Breite eingehalten wird. Dann müssen Sie den Text entsprechend dem vorgegebenen Stil formatieren: <b>"l"</b> bedeutet, dass Sie den Text <strong>links</strong>ausrichten müssen, <b>"c"</b> für die <strong>Mitte</strong>, <b>"r"</b> für <strong>rechts</strong>und <b>"j"</b> bedeutet, dass Sie den Text <strong>im Blocksatz aus</strong>richten müssen. Schließlich sollten die Zeilen der Ausgabe nicht mit einem Leerzeichen enden.
+</p>
+
+<p>
+	Wenn Sie 2 * n + 1 Leerzeichen um eine Zeile setzen müssen, um sie zu zentrieren, dann setzen Sie n Leerzeichen davor, nicht n + 1.
+</p>
+
+<p>
+	Die Rechtschreibregeln:
+	<ul>
+		<li>da wir nicht immer die gleiche Anzahl von Leerzeichen zwischen die Wörter in einer Zeile setzen können, setzen Sie große Blöcke von Leerzeichen vor. Zum Beispiel: X---X---X--X--X--X, wenn Sie 12 Leerzeichen in 5 Lücken setzen müssen: 3-3-2-2-2;</li>
+		<li>richten Sie die letzte Zeile eines Textes nicht aus.</li>
+	</ul>
+</p>
+
+<p>
+	Sie müssen nicht in Betracht ziehen, ein Wort in zwei Teile aufzuteilen, da die angegebenen Breiten groß genug sind.
+</p>
+
+
+<!-- Explain input and output values -->
+<p>
+	<strong>Eingabe:</strong> Ein Text <span>(str{% if is_js %}ing{% endif %})</span>, Breite <span>({% if is_js %}number{% else %}int{% endif %})</span> und Stil <span>(str{% if is_js %}ing{% endif %})</span>.
+</p>
+
+<p>
+	<strong>Ausgabe:</strong> Der formatierte Text ({% if is_js %}string{% else %}str{% endif %}).
+</p>
+
+
+<!-- Put some usage examples -->
+<div class="for_info_only">
+	<p>
+		<strong>Beispiele:</strong>
+	</p>
+	<pre class="brush: {% if is_js %}javascript{% else %}python{% endif %}">{{init_code_tmpl}}</pre>
+</div>
+
+<p>
+	<strong>Vorbedingungen:</strong>
+	<ul>
+		<li><i>all(len(word) &lt;= width for word in text.split());</i></li>
+		<li><i>'\n' nicht in text;</i></li>
+		<li><i>stil in ('l', 'c', 'r', 'j');</i></li>
+		<li><i>0 &lt; len(text) &lt;= 1000.</i></li>
+	</ul>
+</p>
