@@ -1,0 +1,231 @@
+<body data-author="freeman_lex">
+<div class="question-answer">
+    <div class="question">
+        Ich habe keine Ahnung, wie ich mit der Lösung dieser Aufgabe beginnen soll.
+    </div>
+    <div class="answer">
+        <p>
+            💡 Das Modul <b class="code">textwrap</b> aus der Standardbibliothek mit den Methoden zum Ausrichten von Strings <b class="code">center, rjust</b> deckt die meisten Fälle ab. Um eine Zeile der Breite nach zu begradigen, müssen Sie zusätzliche Leerzeichen auf die "Löcher" zwischen den Wörtern verteilen.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Klingt interessant, womit soll ich anfangen?
+    </div>
+    <div class="answer">
+        <p>
+            Importieren Sie Module wie <a target="_blank" href="https://docs.python.org/3/library/textwrap.html">textwrap</a> und <a target="_blank" href="https://docs.python.org/3/library/operator.html">operator</a> und machen Sie sich mit deren Funktionen wie <a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.wrap">wrap()</a>, <a target="_blank" href="https://docs.python.org/3/library/textwrap.html#textwrap.fill">fill()</a> und <a target="_blank" href="https://docs.python.org/3/library/operator.html#operator.methodcaller">methodcaller()</a> vertraut.
+        </p>
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Ich habe die Beschreibung der Module und Funktionen gelesen. Wie kann ich mit dem Lösen beginnen?
+    </div>
+    <div class="answer">
+        <p>
+            Da der linke Blocksatz ein Standardmodus ist, müssen Sie nach dem Umbruch von <b class="code">text</b> in den erforderlichen <b class="code">width</b> keine weiteren Änderungen vornehmen. Falls der Stil <b class="code">l</b> ist, müssen Sie nur <b class="code">text</b> in Zeilen mit dem korrekten <b class="code">width</b> aufteilen und diese wieder zu einem einzigen Text zusammenfügen. Genau das macht <b class="code">textwrap.fill()</b>!
+        </p>
+        <pre class="brush: python">
+if style == "l":
+    return fill(text, width)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wow, das ist ein kluger Schachzug von Python, so nützliche Module zu haben! Was ist als nächstes zu tun?
+    </div>
+    <div class="answer">
+        <p>
+            Für alle anderen <b class="code">style</b>'s benötigen Sie immer noch eine Folge von Zeilen, die für die notwendige <b class="code">width</b> umbrochen werden, ohne sie noch in den Text einzufügen. Verwenden Sie zu diesem Zweck <b class="code">textwrap.wrap()</b>.
+        </p>
+        <pre class="brush: python">
+lines = wrap(text, width)
+        </pre>
+        <p>
+            Wenn die <b class="code">style</b> des Ausrichtens "mittig" oder "rechts" ist, müssen Sie spezielle String-Methoden <a target="_blank" href="https://www.w3schools.com/python/ref_string_center.asp">str.center()</a> und <a target="_blank" href="https://www.w3schools.com/python/ref_string_rjust.asp">str.rjust()</a> verwenden. Was Sie hier brauchen, ist der Aufruf einer korrekten Methode mit dem Wert <b class="code">width</b>. Ein kurzer und einfacher Weg, eine solche Methode zu erstellen, ist die Verwendung von <b class="code">operator.methodcaller()</b>. 
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+        </pre>
+        <p>
+            Abhängig von <b class="code">style</b> nehmen Sie also eine Methode und übergeben <b class="code">width</b> als ihr Argument.
+        </p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Das ist knifflig! Wie wendet man diese Methode an, um korrekt ausgerichteten Text zu erhalten?
+    </div>
+    <div class="answer">
+        <p>
+            Lassen Sie uns gemeinsam nachdenken. Zunächst müssen Sie jede Zeile von <b class="code">lines</b> mit der Methode <b class="code">just</b> umwandeln. Es ist gut, die Funktion <a target="_blank" href="https://www.w3schools.com/python/ref_func_map.asp">map()</a> zu verwenden, um die gleiche Operation auf jedes Element der Sequenz anzuwenden.   
+        </p>
+        <pre class="brush: python">
+map(just, lines)
+        </pre>
+        <p>
+            Um die Leerzeichen am Ende jeder Zeile zu entfernen, müssen Sie die Methode <a target="_blank" href="https://www.w3schools.com/python/ref_string_rstrip.asp">str.rstrip()</a> auf die umgewandelte <b class="code">lines</b> anwenden, genauso wie Sie es oben getan haben.
+            Da Sie sich auf die Methode beziehen, ohne sie aufzurufen, sind Klammern nicht erforderlich.
+        </p>
+        <pre class="brush: python">
+map(str.rstrip, map(just, lines))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Was bleibt für diese beiden Fälle übrig?
+    </div>
+    <div class="answer">
+        <p>
+            Ja, Sie haben Änderungen vorgenommen und fügen nun <b class="code">lines</b> zu einem mehrzeiligen Text zusammen, indem Sie die Methode <a target="_blank" href="https://www.w3schools.com/python/ref_string_join.asp">str.join()</a> mit einem neuen Zeilentrennzeichen verwenden.
+        </p>
+        <pre class="brush: python">
+return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+        <p>
+            Dieser Block sieht nun wie folgt aus:
+        </p>
+        <pre class="brush: python">
+if style in "cr":
+    just = methodcaller(("rjust", "center")[style == "c"], width)
+    return "\n".join(map(str.rstrip, map(just, lines)))
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie wird die Ausrichtung nach Breite gehandhabt?
+    </div>
+    <div class="answer">
+        <p>
+            Diese Art des Blocksatzes wird nicht auf die letzte Zeile im Text angewendet. Entfernen Sie die letzte Zeile aus <b class="code">lines</b> und weisen Sie sie mit der Methode <a target="_blank" href="https://www.w3schools.com/python/ref_list_pop.asp">list.pop()</a> der Variablen zu.
+        </p>
+        <pre class="brush: python">
+last = lines.pop()
+        </pre>
+        <p>
+            Jetzt können Sie Operationen mit <b class="code">lines</b> durchführen. Da Sie sowohl den Index als auch den Wert jeder Zeile benötigen, ist es sinnvoll, die Funktion <a target="_blank" href="https://www.w3schools.com/python/ref_func_enumerate.asp">enumerate()</a> zu verwenden.
+        </p>
+        <pre class="brush: python">
+for i, line in enumerate(lines):
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Was soll ich innerhalb der Schleife tun?
+    </div>
+    <div class="answer">
+        <p>
+            Für jede Zeile müssen Sie die Anzahl der zusätzlich zu verteilenden Leerzeichen und die Anzahl der "Löcher" zwischen den Wörtern in der Zeile zählen.
+        </p>
+        <pre class="brush: python">
+miss, spaces = width - len(line), line.count(" ")
+        </pre>
+        <p>
+            Natürlich können Sie die Verteilung vornehmen, wenn Sie mindestens zwei Wörter in der Zeile haben.
+        </p>
+        <pre class="brush: python">
+if spaces:
+    ...
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie findet man die gewünschte Anzahl von Leerzeichen zwischen den Wörtern heraus?
+    </div>
+    <div class="answer">
+        <p>
+            Die Anzahl der Leerzeichen ist immer ganzzahlig und gemäß der Beschreibung sollten große Blöcke zuerst erscheinen. Sie werden sehen, dass es am einfachsten ist, einen Quotienten und eine Erinnerung aus der Division der zusätzlichen Leerzeichen und "Löcher" zu erhalten. Berechnen Sie diese mit der Funktion <a target="_blank" href="https://www.w3schools.com/python/ref_func_divmod.asp">divmod()</a> innerhalb der Bedingung <b class="code">if</b>.
+        </p>
+        <pre class="brush: python">
+    div, mod = divmod(miss, spaces)
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie ändert man die Anzahl der Leerzeichen zwischen den Wörtern in wünschenswert?
+    </div>
+    <div class="answer">
+        <p>
+            Sie haben bereits ein Leerzeichen zwischen jeweils zwei Wörtern in einer Zeile. Berechnungen zeigen, dass Sie <b class="code">div</b> Leerzeichen zu diesem einen in jedem "Loch" hinzufügen müssen. Das ist mit der Methode <a target="_blank" href="https://www.w3schools.com/python/ref_string_replace.asp">str.replace()</a> leicht zu bewerkstelligen.
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1))
+        </pre>
+        <p>
+            Aber Sie haben immer noch <b class="code">mod</b> Leerzeichen, die Sie um eins auf die ersten "Löcher" verteilen müssen. Sie müssen also erneut eine Ersetzung vornehmen und <b class="code">mod</b> die ersten "Löcher" der Breite <b class="code">(div+1)</b> durch <b class="code">(div+2)</b> ersetzen.
+        </p>
+        <pre class="brush: python">
+line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>Da <b class="code">replace()</b> einen neuen String zurückgibt, müssen Sie diesen dem entsprechenden Index von <b class="code">lines</b> zuweisen.
+        </p>
+        <pre class="brush: python">
+lines[i] = line.replace(" ", " "*(div+1)).replace(" "*(div+1)," "*(div+2), mod)
+        </pre>
+        <p>
+            Das ist schon fast alles. Nach der Schleife müssen Sie die <b class="code">lines</b> mit der <b class="code">last</b> zu einem mehrzeiligen Text zusammenfügen und diesen zurückgeben.
+        </p>
+        <pre class="brush: python">
+return "\n".join(lines + [last])
+        </pre>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Wie sollte also meine endgültige Lösung aussehen?
+    </div>
+    <div class="answer">
+        <p>
+            Sie müssen alle Hinweise zusammenführen und Ihren Code in einen Funktionsausdruck verpacken. Die Verwendung von Typ-Hinweisen für Eingabe- und Ausgabedaten wird dringend empfohlen.
+        </p>
+        <p>Hier ist die gesamte Lösung:</p>
+        <div class="spoiler">
+        <pre class="brush: python">
+from textwrap import wrap, fill
+from operator import methodcaller
+
+
+def text_formatting(text: str, width: int, style: str) -> str:
+    
+    if style == "l":
+        return fill(text, width)
+    lines = wrap(text, width)
+    if style in "cr":
+        just = methodcaller(("rjust", "center")[style == "c"], width)
+        return "\n".join(map(str.rstrip, map(just, lines)))
+    last = lines.pop()
+    for i, line in enumerate(lines):
+        miss, spaces = width - len(line), line.count(" ")
+        if spaces:
+            div, mod = divmod(miss, spaces)
+            lines[i] = line.replace(" ", " "*(div+1))\
+                           .replace(" "*(div+1)," "*(div+2), mod)
+    return "\n".join(lines + [last])
+        </pre>
+        </div>
+        <p>Klicken Sie auf <b>Best Solutions</b> im Menü Mission und sehen Sie sich viele andere interessante Lösungen an!</p>
+    </div>
+</div>
+<div class="question-answer">
+    <div class="question">
+        Vielen Dank! Ich weiß und verstehe jetzt mehr! Alles funktioniert einwandfrei!
+    </div>
+    <div class="answer">
+        👍 Freut mich zu hören!
+    </div>
+</div>
+</body>
